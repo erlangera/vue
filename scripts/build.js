@@ -9,9 +9,10 @@ if (!fs.existsSync('dist')) {
 }
 
 let builds = require('./config').getAllBuilds()
+let sourcemap = false
 
 // filter builds via command line arg
-if (process.argv[2]) {
+if (process.argv[2] && process.argv[2] !== '--') {
   const filters = process.argv[2].split(',')
   builds = builds.filter(b => {
     return filters.some(f => b.output.file.indexOf(f) > -1 || b._name.indexOf(f) > -1)
@@ -23,13 +24,19 @@ if (process.argv[2]) {
   })
 }
 
+// create *.js.map via command line arg
+if (process.argv[3] && process.argv[3] === 'sourcemap') {
+  sourcemap = true
+}
+
 build(builds)
 
 function build (builds) {
   let built = 0
   const total = builds.length
   const next = () => {
-    buildEntry(builds[built]).then(() => {
+    const buildEntryFn = sourcemap ? buildEntryWithMap : buildEntry
+    buildEntryFn(builds[built]).then(() => {
       built++
       if (built < total) {
         next()
@@ -61,6 +68,20 @@ function buildEntry (config) {
       } else {
         return write(file, code)
       }
+    })
+}
+
+function buildEntryWithMap (config) {
+  const output = config.output
+  output.sourcemap = true
+  return rollup.rollup(config)
+    .then(bundle => {
+      bundle.generate(output)
+        .then(() => bundle.write(output))
+        .then(() => {
+          console.log(blue(path.relative(process.cwd(), output.file)))
+          console.log(blue(path.relative(process.cwd(), output.file + '.map')))
+      })
     })
 }
 
