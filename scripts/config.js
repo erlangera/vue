@@ -36,6 +36,16 @@ const resolve = p => {
 }
 
 const builds = {
+  // export different module study Vue source
+  'web-study': {
+    entry: resolve('web/entry-study.js'),
+    dest: resolve('dist/vue.study.js'),
+    format: 'umd',
+    env: 'development',
+    moduleName: 'VueStudy',
+    alias: { he: './entity-decoder' },
+    banner
+  },
   // Runtime only (CommonJS). Used by bundlers e.g. Webpack & Browserify
   'web-runtime-cjs-dev': {
     entry: resolve('web/entry-runtime.js'),
