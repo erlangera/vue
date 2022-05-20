@@ -1,29 +1,39 @@
 module.exports = {
   root: true,
+  parser: "@typescript-eslint/parser",
+
   parserOptions: {
-    parser: require.resolve('babel-eslint'),
-    ecmaVersion: 2018,
-    sourceType: 'module'
+    // parser: "@typescript-eslint/parser",
+    // ecmaVersion: 2018,
+    sourceType: "module",
   },
   env: {
     es6: true,
     node: true,
-    browser: true
+    browser: true,
   },
-  plugins: [
-    "flowtype"
-  ],
+  // plugins: ["flowtype"],
   extends: [
     "eslint:recommended",
-    "plugin:flowtype/recommended"
+    "plugin:@typescript-eslint/eslint-recommended",
   ],
   globals: {
-    "__WEEX__": true,
-    "WXEnvironment": true
+    __TEST__: true,
+    WXEnvironment: true,
   },
   rules: {
-    'no-console': process.env.NODE_ENV !== 'production' ? 0 : 2,
-    'no-useless-escape': 0,
-    'no-empty': 0
-  }
-}
+    'no-unused-vars': [
+      'error',
+      // we are only using this rule to check for unused arguments since TS
+      // catches unused variables but not args.
+      { varsIgnorePattern: '.*', args: 'none' }
+    ],
+    'prefer-spread': 0,
+    'prefer-rest-params': 0,
+    'no-prototype-builtins': 0,
+    "no-console": process.env.NODE_ENV !== "production" ? 0 : 2,
+    "no-useless-escape": 0,
+    "no-empty": 0,
+    "no-extra-semi": 0
+  },
+};
