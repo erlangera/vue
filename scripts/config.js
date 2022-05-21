@@ -28,7 +28,7 @@ const resolve = (p) => {
 const builds = {
   // export different module study Vue source
   'web-study': {
-    entry: resolve('web/entry-study.js'),
+    entry: resolve('web/entry-study.ts'),
     dest: resolve('dist/vue.study.js'),
     format: 'umd',
     env: 'development',
