@@ -4,6 +4,12 @@ import config from '../config'
 
 let uid = 0
 
+export let debuggerFlag: boolean = false
+
+export function toggleDebugger(value: boolean) {
+  debuggerFlag = value
+}
+ 
 /**
  * A dep is an observable that can have multiple
  * directives subscribing to it.
@@ -28,11 +34,17 @@ export default class Dep {
 
   depend() {
     if (Dep.target) {
+      if (debuggerFlag) {
+        debugger
+      }
       Dep.target.addDep(this)
     }
   }
 
   notify() {
+    if (debuggerFlag) {
+      debugger
+    }
     // stabilize the subscriber list first
     const subs = this.subs.slice()
     if (process.env.NODE_ENV !== 'production' && !config.async) {
@@ -62,3 +74,4 @@ export function popTarget() {
   targetStack.pop()
   Dep.target = targetStack[targetStack.length - 1]
 }
+

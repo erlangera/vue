@@ -36,6 +36,15 @@ const builds = {
     alias: { he: './entity-decoder' },
     banner
   },
+  'web-esm-study': {
+    entry: resolve('web/entry-study.ts'),
+    dest: resolve('dist/vue.study.esm.js'),
+    format: 'es',
+    env: 'development',
+    moduleName: 'VueStudy',
+    alias: { he: './entity-decoder' },
+    banner
+  },
   // Runtime only (CommonJS). Used by bundlers e.g. Webpack & Browserify
   'web-runtime-cjs-dev': {
     entry: resolve('web/entry-runtime.ts'),

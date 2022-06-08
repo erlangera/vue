@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "rollup -w -c scripts/config.js --environment TARGET:web-full-dev --sourcemap",
     "dev:study": "rollup -w -c scripts/config.js --environment TARGET:web-study --sourcemap",
+    "dev:esm-study": "rollup -w -c scripts/config.js --environment TARGET:web-esm-study --sourcemap",
     "dev:cjs": "rollup -w -c scripts/config.js --environment TARGET:web-runtime-cjs-dev",
     "dev:esm": "rollup -w -c scripts/config.js --environment TARGET:web-runtime-esm",
     "dev:ssr": "rollup -w -c scripts/config.js --environment TARGET:web-server-renderer",
