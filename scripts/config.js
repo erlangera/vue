@@ -242,6 +242,10 @@ function genConfig(name) {
       format: opts.format,
       banner: opts.banner,
       name: opts.moduleName || 'Vue',
+      sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {
+        // 转换为以vue开头的路径
+        return path.join('/vue/src', relativeSourcePath);
+      },
       exports: 'auto'
     },
     onwarn: (msg, warn) => {
